@@ -35,13 +35,24 @@ server.on("request",function(req,res){
         //与a.js通信
         console.log("与a.js通信，并获得数据" + aExports.msg)
     }
-    else if( req.url==="/login"){
-        res.end("loginpage")
-    }
     else if( req.url==="/search"){
-        res.end("searchpage")
+        //浏览器当作html执行，node当作字符串发送
+        res.end("<h1>search<h1/>")
+    }
+    else if( req.url==="/login"){
+        //text/plain发送的是普通文本，浏览器当作字符串输出
+        res.setHeader('Content-Type','text/plain; charset=utf-8')
+        res.end("<h1>search<h1/>")
+    }
+    else if( req.url==="/news"){
+        //要想正确地让浏览器识别成HTML，要使用'text/html'
+        res.setHeader('Content-Type','text/html; charset=utf-8')
+        res.end("<p>hello html<a>click on</a></p>")
     }
     else if( req.url==="/menu"){
+        //服务器默认发送utf8编码内容，中文操作系统默认解析是gbk
+        //在http协议中，Content-Type就是用来告知对方发送的数据内容是什么类型
+        res.setHeader('Content-Type','text/plain; charset=utf-8')
         //只能返回字符串与二进制数，将数组转换成字符串输出
         res.end(JSON.stringify(menu))
     }
