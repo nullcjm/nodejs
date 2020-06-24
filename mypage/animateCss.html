@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="css/style.css"/>
+		<meta charset="utf-8" />
+		<title>Mr.陳的个人网页</title>
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/style.js
+		" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			.box{
+				width: 100px;
+				height: 100px;
+				background-color: #00A1E9;
+				float: left;
+				margin: 1px;
+				position: relative;
+			}
+			
+			.circle{
+				width: 50px;
+				height: 50px;
+				border-radius: 50%;
+				border: #000000 1px solid;
+				background-color: #04BE02;
+				position: absolute;
+				left: 30px;
+				top: 30px;
+			}
+			
+			.square{
+				width: 50px;
+				height: 50px;
+				border: #000000 1px solid;
+				background-color: #F92420;
+				position: absolute;
+				left: 10px;
+				top: 10px;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<nav class="navbar">
+			<span class="open-side">
+				<a href="#" onclick="openSideMenu()">
+					<img src="img/导航栏.png" width="30">
+				</a>
+			</span>
+			
+			<span class="logo">
+				<a>
+					<img src="img/陳.png" width="30">
+				</a>
+				<h5>的小窝</h5>
+				
+			</span>
+			
+			<ul class="navbar-nav">
+				<li><a href="HomePage.html">首页</a></li>
+				<li><a href="PhotoWall.html">闲逛一下</a></li>
+				<li><a href="Log.html">日志</a></li>
+				<li><a href="MessageBoard.html">踩踩脚印</a></li>
+			</ul>
+			
+			<span class="otherlogo">
+				<a class="icon_2" href="wechat.html">
+					<img src="img/wechat.png" height="30">
+				</a>
+				<a class="icon_3" href="animateCss.html">
+					<img src="img/b站.png" height="30">
+				</a>
+				<a class="icon_4" href="Link.html">
+					<img src="img/小程序.png" height="30">
+				</a>
+			</span>
+		</nav>
+		
+		<div id="side-menu" class="side-nav">
+			<a href="#" class="btn-close" onclick="closeSideMenu()">&times;</a>
+			<a href="HomePage.html">首页</a>
+			<a href="PhotoWall.html">闲逛一下</a>
+			<a href="Log.html">日志</a>
+			<a href="MessageBoard.html">踩踩脚印</a>
+		</div>
+		
+		<div class="box">
+			<div class="circle"></div>
+			<div class="square"></div>
+		</div>
+		
+		
+		<script src="js/animateCSS.js" type="text/javascript" charset="utf-8"></script>
+	<body>
+	</body>
+</html>

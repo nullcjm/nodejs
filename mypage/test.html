@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="css/style.css"/>
+		<link href="https://cdn.bootcss.com/genericons/3.1/genericons.min.css" rel="stylesheet">
+		<meta charset="utf-8">
+		<title>留言墙</title>
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/style.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			.CommentsSection{
+				position: relative;
+				left: 32%;
+			}
+			
+			.CommentsSection h1{
+				text-align: center;
+				position: relative;
+				right: 38%;
+			}
+				
+			.publish{
+				display: block;
+				height: 300px;
+				width: 500px;
+				box-shadow: 5px 5px 5px #333333;
+				border: black 1px solid;
+				padding: 5px 0 0 10px;
+			}
+					
+			.publish h2{
+				margin-bottom: 5px;
+			}
+					
+			.publishCollection label{
+				font-weight: bolder;
+			}
+					
+			.nickName{
+				border: #333333 1px solid;
+			}
+				
+			.InputBox{
+				overflow: hidden;
+				height: 100px;
+				width: 300px;
+				resize: none;
+				border: #333333 1px solid;
+			}
+					
+			.submitBtn .Btn{
+				background-color: #fff;
+				color: #333;
+				border: #333333 1px solid;
+				text-decoration: none;
+				font-weight: bolder;
+				padding: 5px;
+			}
+				
+			.submitBtn .Btn:hover{
+				background-color: #666666;
+				color: #fff;
+			}	
+			
+			.line{
+				height: 1px;
+				width: 500px;
+				border-top: 5px solid #ddd;
+				text-align: center;
+			}
+						
+			.CommentsStyle{
+				width: 500px;
+				border: black 1px solid;
+				word-break: break-all;
+				word-wrap: break-word;
+				box-shadow: 10px 10px 5px #000000;
+				padding-bottom: 10px;
+			}
+			
+			.display{
+				display: none;
+			}
+		
+		</style>
+	</head>
+	<body>
+		<nav class="navbar">
+			<span class="open-side">
+				<a href="#" onclick="openSideMenu()">
+					<img src="img/导航栏.png" width="30">
+				</a>
+			</span>
+			
+			<span class="logo">
+				<a>
+					<img src="img/陳.png" width="30">
+				</a>
+				<h5>的小窝</h5>
+				
+			</span>
+			
+			<ul class="navbar-nav">
+				<li><a href="HomePage.html">首页</a></li>
+				<li><a href="PhotoWall.html">闲逛一下</a></li>
+				<li><a href="Log.html">日志</a></li>
+				<li><a href="MessageBoard.html">踩踩脚印</a></li>
+			</ul>
+			
+			<span class="otherlogo">
+				<a class="icon_2" href="wechat.html">
+					<img src="img/wechat.png" height="30">
+				</a>
+				<a class="icon_3" href="#">
+					<img src="img/b站.png" height="30">
+				</a>
+				<a class="icon_4" href="#">
+					<img src="img/小程序.png" height="30">
+				</a>
+			</span>
+		</nav>
+		
+		<div id="side-menu" class="side-nav">
+			<a href="#" class="btn-close" onclick="closeSideMenu()">&times;</a>
+			<a href="HomePage.html">首页</a>
+			<a href="PhotoWall.html">闲逛一下</a>
+			<a href="Log.html">日志</a>
+			<a href="MessageBoard.html">踩踩脚印</a>
+		</div>
+		
+		<body>
+			<div id="app" class="CommentsSection">
+				<h1>评论区</h1><br>
+				<div class="Comments">
+					<br><h2>全部评论</h2><br>
+					<div class="Comments_item" v-bind:class="[
+						isCommentsStyle ? 'CommentsStyle' : '',isDisplay ? 'display' : ''
+					]">
+						<div v-for="(item,index) in comments" class="CommentsCss">
+								<h3>#{{index + 1}}楼 用户：{{item.name}}</h3>
+								<p>
+									<a><img src="img/评论区.png" height="20px"></a><span>：{{item.com}}</span>
+								</p>
+								<div class="line"></div>
+						</div>
+					</div>
+				</div>
+				<br>
+				<div class="publish">
+					<h2>发表评论</h2><br>
+					<div class="publishCollection">
+						<span>
+							<label>昵称</label>
+							<input type="text" class="nickName" placeholder="输入昵称" v-model="nick_name"/>
+						</span>
+						<div class="TextInputBox">
+							<br><label>输入框</label><br>
+							<textarea  class="InputBox" placeholder="说些什么" v-model="inputText" maxlength="100"></textarea>
+						</div>
+						<div class="submitBtn">
+							<br><a href="#" type="button" class="Btn" v-on:click="updataComments">发表评论</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<script type="text/javascript">
+				var vm = new Vue({
+					el:'#app',
+					data:{
+						nick_name:'',
+						inputText:'',
+						comments:[],
+						isCommentsStyle:false,
+						isDisplay:true,
+					},
+					mounted:function(){
+						if(localStorage.getItem('ComData')){
+							this.comments=JSON.parse(localStorage.getItem('ComData'));
+							this.isCommentsStyle = true;
+							this.isDisplay = false;
+						}else{
+							localStorage.setItem('ComData',JSON.stringify());
+							this.comments=JSON.parse(localStorage.getItem('ComData'));
+						}
+					},
+					methods:{
+						updataComments:function(){
+							if(this.nick_name){
+								if(this.inputText){
+									this.comments.push({
+										name:this.nick_name,
+										com:this.inputText
+									});
+									this.isCommentsStyle = true;
+									this.isDisplay = false;
+								}else{
+								alert('评论不能为空');
+								}
+							}else{
+								alert('昵称不能为空');
+							}
+							this.nick_name = '';
+							this.inputText = '';
+							localStorage.setItem('ComData',JSON.stringify(this.comments));
+						},
+					}
+				})
+			</script>
+		
+		<div class="container_2">
+			<ul class="accordion">
+				<li class="tab">
+					<div class="social wechat">
+						<a href="#">WeChat</a>
+					</div>
+					<div class="content">
+						<h1>WeChat</h1>
+						<p>hfuahi ahiudhai uidhaiuhajshhdah adhihd</p>
+					</div>
+				</li>
+				<li class="tab">
+					<div class="social aliplay">
+						<a href="#">Aliplay</a>
+					</div>
+					<div class="content">
+						<h1>Aliplay</h1>
+						<p>shyguy hsgusgu usgsgusu usguysgu</p>
+					</div>
+				</li>
+				<li class="tab">
+					<div class="social dingtalk">
+						<a href="#">DingTalk</a>
+					</div>
+					<div class="content">
+						<h1>DingTalk</h1>
+						<p>hsgh hsghs  shgshgsjgs shjghsjg s hskjhsk</p>
+					</div>
+				</li>
+				<li class="tab">
+					<div class="social github">
+						<a href="#">Github</a>
+					</div>
+					<div class="content">
+						<h1>Github</h1>
+						<p>is hdjh jdhjwu whjhjs jhsjsk sjhjs </p>
+					</div>
+				</li>
+				<li class="tab">
+					<div class="social sina">
+						<a href="#">Sina</a>
+					</div>
+					<div class="content">
+						<h1>Sina</h1>
+						<p>hsgjs jsgshjsj khjkhwk jkwkh </p>
+					</div>
+				</li>
+				<li class="tab">
+					<div class="social applets">
+						<a href="#">Applets</a>
+					</div>
+					<div class="content">
+						<h1>Applets</h1>
+						<p>hjwgwhjwg jhwgjhwgj iuq qiui qigiakjh dhvjh</p>
+					</div>
+				</li>
+			</ul>
+		</div>
+		
+		<section class="section_dark">
+			<span>
+				copyright @ 2020 intnull
+			</span>
+		</section>
+	</body>
+</html>
